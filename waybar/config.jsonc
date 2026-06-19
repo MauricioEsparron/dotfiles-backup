@@ -1,0 +1,79 @@
+{
+    "position": "top",
+    "height": 32,
+    "spacing": 8,
+    "modules-left": [
+        "hyprland/workspaces",
+        "hyprland/window"
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "cpu",
+        "memory",
+        "pulseaudio",
+        "network",
+        "battery",
+        "tray",
+        "custom/htop",
+        "custom/power"
+    ],
+    "hyprland/workspaces": {
+        "format": "{name}"
+    },
+    "hyprland/window": {
+        "max-length": 50
+    },
+    "clock": {
+        "format": "  {:%H:%M}",
+        "format-alt": "  {:%Y-%m-%d %H:%M}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+    "cpu": {
+        "format": "󰻠 {usage}%",
+        "tooltip": false,
+        "interval": 2
+    },
+    "memory": {
+        "format": "󰍛 {}%",
+        "interval": 2
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "󰝟 Mute",
+        "format-icons": {
+            "default": ["󰕿", "󰖀", "󰕾"]
+        },
+        "on-click": "pavucontrol"
+    },
+    "network": {
+        "format-wifi": "󰤨 {essid}",
+        "format-ethernet": "󰈀 {ipaddr}",
+        "format-disconnected": "󰤭 Sin red",
+        "tooltip-format": "{ifname}: {ipaddr}\nSeñal: {signalStrength}%"
+    },
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-plugged": "󰚥 {capacity}%",
+        "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+    "tray": {
+        "spacing": 8
+    },
+    "custom/htop": {
+        "format": "󰄉 PROC",
+        "tooltip": false,
+        "on-click": "kitty --title htop -e htop"
+    },
+   "custom/power": {
+        "format": "⏻",
+        "tooltip": false,
+        "on-click": "wlogout"
+    }
+}
