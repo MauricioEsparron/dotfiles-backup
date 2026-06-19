@@ -24,7 +24,7 @@
 -- See https://wiki.hypr.land/Configuring/Basics/Monitors/
 hl.monitor({
     output   = "HDMI-A-1",
-    mode     = "1920x1080@60",
+    mode     = "1920x1080@240",
     position = "0x0",
     scale    = "1",
 })
@@ -53,12 +53,12 @@ local menu = "rofi -show drun -theme ~/.config/rofi/macos.rasi"
 -- Or execute your favorite apps at launch like this:
 --
 hl.on("hyprland.start", function()
-    hl.exec_cmd("waybar")
+    hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=Hyprland")
+    hl.exec_cmd("qs -c noctalia-shell")
     hl.exec_cmd("wl-paste --type text --watch cliphist store")
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
-    hl.exec_cmd("hyprpm reload -n")
+    hl.exec_cmd("sleep 2 && hyprpm reload -n")
 end)
-
 -------------------------------
 ---- ENVIRONMENT VARIABLES ----
 -------------------------------
@@ -288,6 +288,7 @@ hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd("/home/mauricio/.local/bin/cl
 hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd("grim -g \"$(slurp)\" - | wl-copy"))
 hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("cliphist wipe"))
 hl.bind(mainMod .. " + K", hl.dsp.exec_cmd("show-keybinds"))
+hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("qs -c noctalia-shell ipc call wallpaper toggle"))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
