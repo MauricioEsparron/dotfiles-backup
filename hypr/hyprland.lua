@@ -56,6 +56,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("waybar")
     hl.exec_cmd("wl-paste --type text --watch cliphist store")
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
+    hl.exec_cmd("hyprpm reload -n")
 end)
 
 -------------------------------
@@ -85,7 +86,7 @@ hl.env("XCURSOR_SIZE", "32")
 
 -- hl.permission("/usr/(bin|local/bin)/grim", "screencopy", "allow")
 -- hl.permission("/usr/(lib|libexec|lib64)/xdg-desktop-portal-hyprland", "screencopy", "allow")
--- hl.permission("/usr/(bin|local/bin)/hyprpm", "plugin", "allow")
+ hl.permission("/usr/(bin|local/bin)/hyprpm", "plugin", "allow")
 
 
 -----------------------
