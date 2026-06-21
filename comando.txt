@@ -1,0 +1,62 @@
+tarea para la casa: buenas noches
+
+instalar steam
+instalar proton
+instalar Sober -> para roblox
+
+
+definir arquitectura de la aplicación de conversion de audio a texto y vicerversa
+
+
+
+--
+comando: backup-dotfiles
+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
+--
+comando mover imagenes
+sudo mv nombre.png /usr/share/wallpapers/cachyos-wallpapers/
+--
+ASCI EN CONSOLA:
+
+comando agregar y mover ASCCI:
+ff-pick
+
+mkdir -p ~/.config/fastfetch/logos/images
+mv ~/Descargas/edgerunners-mask.txt ~/.config/fastfetch/logos/
+mv ~/Descargas/edgerunners-portrait.txt ~/.config/fastfetch/logos/
+mv ~/Descargas/ff-pick.fish ~/.config/fish/functions/
+--
+comando:
+nano /home/mauricio/.config/hypr/hyprland.lua
+--
+comando corregir posicion:
+hyprctl eval 'hl.monitor({ output = "HDMI-A-1", mode = "1920x1080@240", position = "0x0", scale = 1 }) hl.monitor({ output = "eDP-1", mode = "1366x768@60", position = "1920x0", scale = 1 })'
+
+--
+comando lsitar monitores:
+hyprctl monitors all
+nano ~/.config/hypr/monitors.conf
+fuente: https://wiki.hypr.land/0.41.2/Configuring/Monitors/
+
+
+--
+comando para recargar configuraciones:
+hyprctl reload
+--
+1. Abre el archivo de configuración de tu usuario normal (no root) con este comando:
+	nano ~/.bashrc
+2. Baja hasta el puro final del archivo con las flechas de tu teclado y pega esta línea en una fila vacía:
+alias matrix="cmatrix -b -C cyan"
+3. Aplica el truco inmediatamente ejecutando:
+source ~/.bashrc
+
+
+--
+Contexto para continuar:
+Estoy en CachyOS (Hyprland + UWSM, config en Lua, BTRFS+snapper, Limine bootloader, fish shell, dual boot con Windows para Valorant). Evito instalar paquetes vía AUR por seguridad (preferimos pacman oficial, Flatpak, o compilar manualmente desde GitHub revisando el código primero).
+Ya tengo configurado: Waybar reemplazado por Noctalia Shell (Quickshell), rofi con tema macOS-style, cliphist, atajos personalizados, cursor Bibata vectorial con plugin dynamic-cursors (shake to enlarge), dos monitores (HDMI-A-1 240Hz izquierda, eDP-1 60Hz derecha), dotfiles respaldados en GitHub (MauricioEsparron/dotfiles-backup) con el comando backup-dotfiles.
+Lo que estoy haciendo ahora: Creé una VM con virt-manager/QEMU-KVM (CachyOS dentro, 4GB RAM, 4 CPUs, 20GB disco) para aprender QML/Quickshell desde cero y eventualmente construir mi propio shell de escritorio personalizado (similar a Noctalia pero hecho por mí). Es mi primera vez con QML. Ya resolví que la VM necesitaba reglas de UFW para el tráfico de virbr0 y ya tiene internet funcionando.
+Próximo paso: Terminar de instalar CachyOS dentro de la VM, y luego empezar con los fundamentos de QML antes de tocar Quickshell.
+Pendiente para otro día (sesión calmada, no de madrugada): Configurar Secure Boot con sbctl + Limine en el sistema principal (ya instalado sbctl, ya en "Setup Mode" intentado pero sin completar) — necesario para que Valorant funcione en Windows vía Vanguard anti-cheat. Tengo USB de instalación de CachyOS como respaldo de emergencia.
+--
+
