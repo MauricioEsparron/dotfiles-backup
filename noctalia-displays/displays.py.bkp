@@ -1,0 +1,112 @@
+import subprocess
+import json
+import sys
+
+class DisplayManager:
+    """
+    Backend encargado de leer el hardware real mediante Hyprland 
+    y aplicar los cambios de resolución, hercios (Hz) y posición.
+    """
+
+    def get_monitors(self):
+        """
+        Obtiene la lista de nombres de todos los monitores conectados.
+        Ejecuta 'hyprctl monitors -j' para recibir la información en JSON limpio.
+        """
+        try:
+            result = subprocess.run(
+                ["hyprctl", "monitors", "-j"], 
+                capture_output=True, 
+                text=True, 
+                check=True
+            )
+            monitors_json = json.loads(result.stdout)
+            return [{"name": m["name"]} for m in monitors_json]
+        except Exception as e:
+            print(f"Error al obtener monitores: {e}", file=sys.stderr)
+            return []
+
+    def get_monitor_modes(self, monitor_name):
+        """
+        Obtiene todos los modos de resolución y Hz que soporta un monitor específico.
+        """
+        try:
+            result = subprocess.run(
+                ["hyprctl", "monitors", "-j"], 
+                capture_output=True, 
+                text=True, 
+                check=True
+            )
+            monitors_json = json.loads(result.stdout)
+            
+            for m in monitors_json:
+                if m["name"] == monitor_name:
+                    return m.get("availableModes", [])
+                    
+            return []
+        except Exception as e:
+            print(f"Error al obtener los modos de {monitor_name}: {e}", file=sys.stderr)
+            return []
+
+    def set_monitor(self, output, width, height, hz, posicion):
+        """
+        Configura el monitor seleccionado y acomoda automáticamente el monitor restante
+        en el lado opuesto usando dos llamadas consecutivas e independientes a Hyprland.
+        """
+        import subprocess
+
+        # 1. Definir la posición del monitor actual elegido en la GUI
+        if posicion == "Izquierda":
+            coord_actual = "0x0"
+            coord_restante = f"{width}x0"  # Coloca el secundario justo donde termina este
+        else:
+            coord_actual = "1920x0"
+            coord_restante = "0x0"
+
+        # 2. Identificar cuál es el otro monitor conectado en el sistema
+        monitores = self.get_monitors()
+        otro_monitor = None
+        for m in monitores:
+            if m["name"] != output:
+                otro_monitor = m["name"]
+                break
+
+        print(f"\n[BACKEND] Reordenando layout para evitar clonación virtual...")
+
+        try:
+            # LLAMADA 1: Configurar el monitor principal de la acción de forma aislada
+            lua_cmd1 = f'hl.monitor({{ output = "{output}", mode = "{width}x{height}@{hz}", position = "{coord_actual}", scale = 1 }})'
+            subprocess.run(["hyprctl", "eval", lua_cmd1], check=True)
+            print(f"👉 Monitor {output} enviado a {coord_actual}")
+
+            # LLAMADA 2: Mover el monitor secundario a su coordenada opuesta segura de forma aislada
+            if otro_monitor:
+                # Usamos un modo seguro por defecto para el monitor restante
+                # Si el restante es la laptop usaría su modo nativo, si es el HDMI el suyo
+                modo_seguro = "1366x768@60" if otro_monitor == "eDP-1" else "1920x1080@240"
+                
+                lua_cmd2 = f'hl.monitor({{ output = "{otro_monitor}", mode = "{modo_seguro}", position = "{coord_restante}", scale = 1 }})'
+                subprocess.run(["hyprctl", "eval", lua_cmd2], check=True)
+                print(f"👉 Monitor secundario {otro_monitor} desplazado a {coord_restante}")
+
+            print("[BACKEND] ¡Monitores alineados y separados correctamente sin modo espejo!")
+            return True
+
+        except subprocess.CalledProcessError as e:
+            print(f"[BACKEND] Error al comunicar con Hyprland: {e}", file=sys.stderr)
+            return False
+
+# --- BLOQUE DE PRUEBA EN TERMINAL ---
+if __name__ == "__main__":
+    dm = DisplayManager()
+    print("--- Probando lectura de Hardware ---")
+    monitores = dm.get_monitors()
+    print(f"Monitores detectados: {monitores}\n")
+    
+    for monitor in monitores:
+        nombre_monitor = monitor["name"]
+        print(f"Modos disponibles para {nombre_monitor}:")
+        modos = dm.get_monitor_modes(nombre_monitor)
+        for modo in modos:
+            print(f" - {modo}")
+        print("-" * 30)
