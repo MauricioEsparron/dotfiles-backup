@@ -1,4 +1,9 @@
 {
+    "layer": "top",
+    "exclusive": true,
+    "position": "top",
+    "height": 32,
+    "spacing": 8,
     "position": "top",
     "height": 32,
     "spacing": 8,

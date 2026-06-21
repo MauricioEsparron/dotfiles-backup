@@ -28,6 +28,7 @@ hl.monitor({
     position = "0x0",
     scale    = "1",
 })
+
 hl.monitor({
     output   = "eDP-1",
     mode     = "1366x768@60",
@@ -35,11 +36,13 @@ hl.monitor({
     scale    = "1",
 })
 
+
 ---------------------
 ---- MY PROGRAMS ----
 ---------------------
 
 -- Set programs that you use
+
 local terminal    = "kitty"
 local fileManager = "dolphin"
 local menu = "rofi -show drun -theme ~/.config/rofi/macos.rasi"
@@ -97,7 +100,7 @@ hl.env("XCURSOR_SIZE", "32")
 hl.config({
     general = {
         gaps_in  = 5,
-        gaps_out = 20,
+        gaps_out = { top = 28, bottom = 12, left = 12, right = 12 },
 
         border_size = 2,
 
@@ -283,7 +286,11 @@ local closeWindowBind = hl.bind(mainMod .. " + C", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
-hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + V", function()
+    hl.dispatch(hl.dsp.window.float({ action = "toggle" }))
+    hl.dispatch(hl.dsp.window.resize({ x = 950, y = 550, relative = false }))
+    hl.dispatch(hl.dsp.window.center())
+end)
 hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd("/home/mauricio/.local/bin/cliphist-img"))
 hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd("grim -g \"$(slurp)\" - | wl-copy"))
 hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("cliphist wipe"))
