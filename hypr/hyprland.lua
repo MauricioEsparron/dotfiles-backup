@@ -100,7 +100,8 @@ hl.env("XCURSOR_SIZE", "32")
 hl.config({
     general = {
         gaps_in  = 5,
-        gaps_out = { top = 28, bottom = 12, left = 12, right = 12 },
+        -- gaps_out = { top = 28, bottom = 12, left = 12, right = 12 },
+	gaps_out = 20,	
 
         border_size = 2,
 
