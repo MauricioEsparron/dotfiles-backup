@@ -1,0 +1,12 @@
+com.discordapp.Discord
+com.notepadqq.Notepadqq
+com.obsproject.Studio
+com.spotify.Client
+org.freedesktop.Platform
+org.freedesktop.Platform.GL.default
+org.freedesktop.Platform.GL.default
+org.freedesktop.Platform.GL.default
+org.freedesktop.Platform.GL.default
+org.freedesktop.Platform.codecs-extra
+org.gtk.Gtk3theme.Breeze
+org.kde.Platform
